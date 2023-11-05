@@ -1,7 +1,13 @@
+import { Issue } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
+import axios from "axios";
 import React from "react";
+import { format } from "date-fns";
 
-const IssuesTable = () => {
+const IssuesTable = async () => {
+  const issues: Issue[] = (await axios.get("http://localhost:3000/api/issues"))
+    .data;
+
   return (
     <Table.Root variant="surface" size={"3"}>
       <Table.Header>
@@ -11,25 +17,25 @@ const IssuesTable = () => {
           <Table.ColumnHeaderCell width={"20%"}>Created</Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
-
       <Table.Body>
-        <Table.Row>
-          <Table.RowHeaderCell>Danilo Sousa</Table.RowHeaderCell>
-          <Table.Cell>danilo@example.com</Table.Cell>
-          <Table.Cell>Developer</Table.Cell>
-        </Table.Row>
+        {issues.map((issue) => {
+          // Format the date using date-fns
+          const formattedDate = format(
+            new Date(issue.createdAt),
+            "EEE, MMM d yyyy",
+            {
+              useAdditionalWeekYearTokens: true,
+            }
+          );
 
-        <Table.Row>
-          <Table.RowHeaderCell>Zahra Ambessa</Table.RowHeaderCell>
-          <Table.Cell>zahra@example.com</Table.Cell>
-          <Table.Cell>Admin</Table.Cell>
-        </Table.Row>
-
-        <Table.Row>
-          <Table.RowHeaderCell>Jasper Eriksson</Table.RowHeaderCell>
-          <Table.Cell>jasper@example.com</Table.Cell>
-          <Table.Cell>Developer</Table.Cell>
-        </Table.Row>
+          return (
+            <Table.Row key={issue.id}>
+              <Table.RowHeaderCell>{issue.title}</Table.RowHeaderCell>
+              <Table.Cell>{issue.status}</Table.Cell>
+              <Table.Cell>{formattedDate}</Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table.Body>
     </Table.Root>
   );

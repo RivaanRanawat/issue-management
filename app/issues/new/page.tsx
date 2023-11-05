@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorText from "@/app/components/ErrorText";
 import Loader from "@/app/components/Loader";
 
-type NewIssueForm = z.infer<typeof createNewIssueSchema>;
+type IssueType = z.infer<typeof createNewIssueSchema>;
 
 function NewIssuesPage() {
   const {
@@ -20,7 +20,7 @@ function NewIssuesPage() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewIssueForm>({
+  } = useForm<IssueType>({
     resolver: zodResolver(createNewIssueSchema),
   });
   const [error, setError] = useState("");
