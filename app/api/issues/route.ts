@@ -1,18 +1,13 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import {z} from 'zod';
-
-const createNewIssueSchema = z.object({
-    title: z.string().min(1, 'Title is required.').max(200, 'Title can be upto 200 characters long.'),
-    description: z.string().min(1, 'Description is required.')
-});
+import { createNewIssueSchema } from "../../createNewIssueSchema";
 
 export async function POST(req: NextRequest) {
     const body = await req.json();
     const validation = createNewIssueSchema.safeParse(body);
 
     if(!validation.success) {
-        return NextResponse.json(validation.error.errors, {status: 400});
+        return NextResponse.json(validation.error.format(), {status: 400});
     }
     
     const newIssue = await prisma.issue.create({
