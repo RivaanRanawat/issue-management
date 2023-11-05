@@ -1,8 +1,10 @@
 import { Issue } from "@prisma/client";
-import { Table } from "@radix-ui/themes";
+import { Table, Text } from "@radix-ui/themes";
 import axios from "axios";
 import React from "react";
 import { format } from "date-fns";
+import Link from "next/link";
+import StatusBadge from "./StatusBadge";
 
 const IssuesTable = async () => {
   const issues: Issue[] = (await axios.get("http://localhost:3000/api/issues"))
@@ -31,7 +33,9 @@ const IssuesTable = async () => {
           return (
             <Table.Row key={issue.id}>
               <Table.RowHeaderCell>{issue.title}</Table.RowHeaderCell>
-              <Table.Cell>{issue.status}</Table.Cell>
+              <Table.Cell>
+                <StatusBadge status={issue.status} />{" "}
+              </Table.Cell>
               <Table.Cell>{formattedDate}</Table.Cell>
             </Table.Row>
           );
