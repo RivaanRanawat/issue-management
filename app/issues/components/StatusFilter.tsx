@@ -1,41 +1,42 @@
 "use client";
+import { Status } from "@prisma/client";
 import { Button, DropdownMenu } from "@radix-ui/themes";
-import React from "react";
+import React, { useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 const StatusFilter = () => {
+  const [status, setStatus] = useState("");
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         <Button variant="soft" size={"3"}>
-          Filter By Status
+          {status.length > 0 ? status : "Filter By Status"}
           <RiArrowDropDownLine />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <DropdownMenu.Item shortcut="⌘ E">Edit</DropdownMenu.Item>
-        <DropdownMenu.Item shortcut="⌘ D">Duplicate</DropdownMenu.Item>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item shortcut="⌘ N">Archive</DropdownMenu.Item>
-
-        <DropdownMenu.Sub>
-          <DropdownMenu.SubTrigger>More</DropdownMenu.SubTrigger>
-          <DropdownMenu.SubContent>
-            <DropdownMenu.Item>Move to project…</DropdownMenu.Item>
-            <DropdownMenu.Item>Move to folder…</DropdownMenu.Item>
-
-            <DropdownMenu.Separator />
-            <DropdownMenu.Item>Advanced options…</DropdownMenu.Item>
-          </DropdownMenu.SubContent>
-        </DropdownMenu.Sub>
-
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item>Share</DropdownMenu.Item>
-        <DropdownMenu.Item>Add to favorites</DropdownMenu.Item>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item shortcut="⌘ ⌫" color="red">
-          Delete
-        </DropdownMenu.Item>
+        {Object.keys(Status).map((status) => {
+          let statusText = "Open";
+          switch (status) {
+            case Status.CLOSED:
+              statusText = "Closed";
+              break;
+            case Status.IN_PROGRESS:
+              statusText = "In Progress";
+              break;
+          }
+          return (
+            <DropdownMenu.Item
+              key={status}
+              onSelect={() => {
+                setStatus(statusText);
+              }}
+            >
+              {statusText}
+            </DropdownMenu.Item>
+          );
+        })}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
