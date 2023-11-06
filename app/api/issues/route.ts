@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { createNewIssueSchema } from "../../createNewIssueSchema";
+import { Status } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
     const body = await req.json();
@@ -21,6 +22,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-    const issues = await prisma.issue.findMany();
+    const url1stPart: any = req.url.split('?')[1];
+    const status = Object.values(Status).includes(url1stPart) ? url1stPart : undefined;
+
+    const issues = await prisma.issue.findMany({where: { status }});
     return NextResponse.json(issues, {status: 200});
 }

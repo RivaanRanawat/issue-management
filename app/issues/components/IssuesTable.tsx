@@ -1,14 +1,15 @@
-import { Issue } from "@prisma/client";
+import { Issue, Status } from "@prisma/client";
 import { Table, Text } from "@radix-ui/themes";
 import axios from "axios";
 import React from "react";
 import { format } from "date-fns";
-import Link from "next/link";
 import StatusBadge from "./StatusBadge";
 
-const IssuesTable = async () => {
-  const issues: Issue[] = (await axios.get("http://localhost:3000/api/issues"))
-    .data;
+const IssuesTable = async ({ searchParams }: any) => {
+  const status = searchParams.status;
+  const issues: Issue[] = (
+    await axios.get(`http://localhost:3000/api/issues?${status}`)
+  ).data;
 
   return (
     <Table.Root variant="surface" size={"3"}>

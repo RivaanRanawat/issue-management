@@ -26,7 +26,7 @@ const StatusFilter = () => {
           params.append("orderBy", searchParams.get("orderBy")!);
 
         const query = params.size ? "?" + params.toString() : "";
-        router.push("/issues/list" + query);
+        router.push("/issues" + query);
       }}
     >
       <Select.Trigger placeholder="Filter by status" />
@@ -38,37 +38,6 @@ const StatusFilter = () => {
         ))}
       </Select.Content>
     </Select.Root>
-    // <DropdownMenu.Root>
-    //   <DropdownMenu.Trigger>
-    //     <Button variant="soft" size={"3"}>
-    //       {status.length > 0 ? status : "Filter By Status"}
-    //       <RiArrowDropDownLine />
-    //     </Button>
-    //   </DropdownMenu.Trigger>
-    //   <DropdownMenu.Content>
-    //     {Object.keys(Status).map((status) => {
-    //       let statusText = "Open";
-    //       switch (status) {
-    //         case Status.CLOSED:
-    //           statusText = "Closed";
-    //           break;
-    //         case Status.IN_PROGRESS:
-    //           statusText = "In Progress";
-    //           break;
-    //       }
-    //       return (
-    //         <DropdownMenu.Item
-    //           key={status}
-    //           onSelect={() => {
-    //             setStatus(statusText);
-    //           }}
-    //         >
-    //           {statusText}
-    //         </DropdownMenu.Item>
-    //       );
-    //     })}
-    //   </DropdownMenu.Content>
-    // </DropdownMenu.Root>
   );
 };
 

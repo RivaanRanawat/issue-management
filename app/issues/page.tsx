@@ -4,7 +4,7 @@ import React from "react";
 import IssuesTable from "./components/IssuesTable";
 import StatusFilter from "./components/StatusFilter";
 
-function IssuesPage() {
+function IssuesPage({ searchParams }: any) {
   return (
     <div className="space-y-3">
       <div className="flex justify-between">
@@ -13,7 +13,7 @@ function IssuesPage() {
           <Link href="/issues/new">New Issue</Link>
         </Button>
       </div>
-      <IssuesTable />
+      <IssuesTable searchParams={searchParams} />
     </div>
   );
 }
