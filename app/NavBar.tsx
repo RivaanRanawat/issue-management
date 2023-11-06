@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { GoIssueReopened } from "react-icons/go";
+import AuthState from "./components/AuthState";
 
 const NavBar = () => {
   const navbarItems = [
@@ -36,6 +37,7 @@ const NavBar = () => {
           </Link>
         ))}
       </ul>
+      <AuthState />
     </nav>
   );
 };
