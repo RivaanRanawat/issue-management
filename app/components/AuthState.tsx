@@ -8,7 +8,7 @@ const AuthState = () => {
   const { status, data: session } = useSession();
 
   if (status == "loading") {
-    return <Skeleton width="3rem" />;
+    return <Skeleton circle={true} height={28} width={28} />;
   }
 
   if (status == "unauthenticated") {
@@ -28,7 +28,6 @@ const AuthState = () => {
           size="2"
           radius="full"
           className="cursor-pointer"
-          referrerPolicy="no-referrer"
         />
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>

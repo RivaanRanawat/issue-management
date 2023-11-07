@@ -4,11 +4,11 @@ import axios from "axios";
 import React from "react";
 import { format } from "date-fns";
 import StatusBadge from "./StatusBadge";
+import Link from "next/link";
 
 const IssuesTable = async ({ searchParams }: any) => {
-  const status = searchParams.status;
   const issues: Issue[] = (
-    await axios.get(`http://localhost:3000/api/issues?${status}`)
+    await axios.get(`http://localhost:3000/api/issues?${searchParams.status}`)
   ).data;
 
   return (
@@ -33,7 +33,9 @@ const IssuesTable = async ({ searchParams }: any) => {
 
           return (
             <Table.Row key={issue.id}>
-              <Table.RowHeaderCell>{issue.title}</Table.RowHeaderCell>
+              <Table.RowHeaderCell>
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+              </Table.RowHeaderCell>
               <Table.Cell>
                 <StatusBadge status={issue.status} />{" "}
               </Table.Cell>
