@@ -1,8 +1,9 @@
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
 import IssuesTable from "./components/IssuesTable";
 import StatusFilter from "./components/StatusFilter";
+import Pagination from "./components/Pagination";
 
 function IssuesPage({ searchParams }: any) {
   return (
@@ -14,6 +15,10 @@ function IssuesPage({ searchParams }: any) {
         </Button>
       </div>
       <IssuesTable searchParams={searchParams} />
+      <Pagination
+        currentPage={parseInt(searchParams.page) || 1}
+        noOfIssues={30}
+      />
     </div>
   );
 }
